@@ -11,7 +11,9 @@
     "build": "parcel build src/index.html -d dist",
     "postbuild": "ncp assets dist",
     "predeploy": "npm run build",
-    "deploy": "twilio-run deploy"
+    "deploy": "twilio-run deploy",
+    "preci:test": "npm run build",
+    "ci:test": "node ./scripts/ci-test-server.js"
   },
   "dependencies": {
     "@twilio/runtime-handler": "1.2.0-rc.3",
@@ -20,9 +22,13 @@
     "twilio": "^3.69.0"
   },
   "devDependencies": {
+    "@stoplight/prism-cli": "^4.4.0",
+    "@stoplight/prism-core": "^4.4.0",
+    "@stoplight/prism-http-server": "^4.4.0",
     "@twilio-paste/core": "^10.14.0",
     "@twilio-paste/icons": "^5.7.0",
     "concurrently": "^6.3.0",
+    "cypress": "^8.3.1",
     "ncp": "^2.0.0",
     "parcel-bundler": "^1.12.5",
     "prop-types": "^15.7.2",

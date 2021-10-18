@@ -71,10 +71,22 @@
         <section>
           <form id="broadcast">
             <label for="message-body">Message</label>
-            <input type="text" id="message-body" required />
+            <input
+              type="text"
+              id="message-body"
+              required
+              data-cy="message-body"
+            />
             <p>Send updates to:</p>
             <div>
-              <input type="radio" id="all" name="tags" value="all" checked />
+              <input
+                type="radio"
+                id="all"
+                name="tags"
+                value="all"
+                checked
+                data-cy="to-everyone"
+              />
               <label for="all">Everyone</label><br />
             </div>
             <div>
@@ -86,10 +98,21 @@
               <label for="option2">Team Cake</label><br />
             </div>
             <label for="passcode">Admin Passcode</label>
-            <input type="password" id="passcode" required name="passcode"/>
-            <input class="button-primary" type="submit" value="Send message" />
+            <input
+              type="password"
+              id="passcode"
+              required
+              name="passcode"
+              data-cy="passcode"
+            />
+            <input
+              class="button-primary"
+              type="submit"
+              value="Send message"
+              data-cy="submit"
+            />
           </form>
-          <span id="status"></span>
+          <span id="status" data-cy="status"></span>
         </section>
       </div>
     </main>
@@ -100,34 +123,37 @@
   <script>
     function logError(error) {
       console.error(error);
-      document.getElementById("status").textContent = error;
+      document.getElementById('status').textContent = error;
     }
 
     function broadcast(event) {
       event.preventDefault();
 
-      const body = document.getElementById("message-body").value;
-      const passcode = document.getElementById("passcode").value;
+      const body = document.getElementById('message-body').value;
+      const passcode = document.getElementById('passcode').value;
 
       const data = new URLSearchParams();
-      data.append("body", body);
+      data.append('body', body);
 
       var tag = document.querySelector('input[name="tags"]:checked').value;
-      data.append("tag", tag);
+      data.append('tag', tag);
 
-      fetch("./broadcast", {
-        method: "POST",
+      fetch('./broadcast', {
+        method: 'POST',
         body: data,
         headers: {
-          Authorization: `Basic ${btoa(`admin:${passcode}`)}`
-        }
+          Authorization: `Basic ${btoa(`admin:${passcode}`)}`,
+        },
       })
         .then((response) => response.json())
         .then((json) => {
           if (json.success) {
-            document.getElementById("status").innerHTML =
-              `<p>Successfully sent message to subscribers. <a href="/broadcast.html">Send another message.</a></p>`
+            document.getElementById(
+              'status'
+            ).innerHTML = `<p>Successfully sent message to subscribers. <a href="/broadcast.html">Send another message.</a></p>`;
           } else {
+            document.getElementById('status').innerHTML =
+              '<p>Failed to send a message. Please check your logs</p>';
             logError(json.error);
           }
         })
@@ -136,8 +162,6 @@
         });
     }
 
-    document
-      .getElementById("broadcast")
-      .addEventListener("submit", broadcast);
+    document.getElementById('broadcast').addEventListener('submit', broadcast);
   </script>
 </html>

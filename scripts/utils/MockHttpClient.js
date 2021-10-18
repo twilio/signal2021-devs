@@ -7,6 +7,10 @@ class MockHttpClient {
 
   async request(opts) {
     opts.uri = opts.uri.replace(
+      `https://notify.twilio.com`,
+      'http://localhost:4001'
+    );
+    opts.uri = opts.uri.replace(
       `https://verify.twilio.com`,
       'http://localhost:4002'
     );

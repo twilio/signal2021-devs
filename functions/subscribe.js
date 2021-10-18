@@ -75,6 +75,12 @@ exports.handler = async (context, event, callback) => {
       });
       return callback(null, response);
     } else {
+      if (event.anonymousId) {
+        analytics.track({
+          anonymousId: event.anonymousId,
+          event: 'Failed Verification',
+        });
+      }
       console.error('Incorrect token.');
       response.setStatusCode(401);
       response.setBody({

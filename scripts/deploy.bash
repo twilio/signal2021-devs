@@ -20,6 +20,7 @@ npx twilio-run deploy \
 alias env-set='npx twilio-run env set --username "$TWILIO_API_KEY" --password "$TWILIO_API_SECRET" --service-sid "$SERVICE_SID" --environment "$SERVERLESS_ENVIRONMENT"'
 
 env-set --key PASSCODE --value $PASSCODE
+env-set --key SEGMENT_WRITE_KEY --value $SEGMENT_WRITE_KEY
 env-set --key TWILIO_PHONE_NUMBER --value $TWILIO_PHONE_NUMBER
 env-set --key VERIFY_SERVICE_SID --value $VERIFY_SERVICE_SID
 env-set --key BROADCAST_NOTIFY_SERVICE_SID --value $BROADCAST_NOTIFY_SERVICE_SID

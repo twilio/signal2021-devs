@@ -7,6 +7,8 @@ export function useOtpSubscription() {
   const [phoneNumber, setPhoneNumber] = React.useState(null);
 
   function sendVerifyToken(phoneNumber) {
+    analytics.track('Start subscription');
+
     fetch('/start-verify', {
       method: 'POST',
       headers: {
@@ -37,12 +39,19 @@ export function useOtpSubscription() {
 
     tags = Array.isArray(tags) && tags.length > 0 ? tags : undefined;
 
+    let anonymousId;
+    try {
+      anonymousId = analytics.user().anonymousId();
+    } catch (err) {
+      anonymousId = undefined;
+    }
+
     fetch('/subscribe', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ to: phoneNumber, code, tags }),
+      body: JSON.stringify({ to: phoneNumber, code, tags, anonymousId }),
     })
       .then((resp) => resp.json())
       .then((data) => {

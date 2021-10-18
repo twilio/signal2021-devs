@@ -9,6 +9,7 @@
  */
 
 const crypto = require('crypto');
+const Analytics = require('analytics-node');
 
 function sendSubscribedNotification(notifyService, identity) {
   return notifyService.notifications
@@ -22,6 +23,7 @@ function sendSubscribedNotification(notifyService, identity) {
 exports.handler = async (context, event, callback) => {
   const { setupResourcesIfRequired } = require(Runtime.getAssets()['/setup.js']
     .path);
+  const analytics = new Analytics(context.SEGMENT_WRITE_KEY);
   const response = new Twilio.Response();
   response.appendHeader('Content-Type', 'application/json');
 
@@ -50,6 +52,21 @@ exports.handler = async (context, event, callback) => {
         address: to,
         tag: tags,
       });
+
+      if (event.anonymousId) {
+        analytics.track({
+          anonymousId: event.anonymousId,
+          event: 'User Subscribed',
+        });
+        analytics.identify({
+          anonymousId: event.anonymousId,
+          traits: {
+            phoneNumber: to,
+          },
+        });
+        await analytics.flush();
+      }
+
       await sendSubscribedNotification(notifyService, identity);
 
       response.setStatusCode(200);
@@ -57,14 +74,15 @@ exports.handler = async (context, event, callback) => {
         success: true,
       });
       return callback(null, response);
+    } else {
+      console.error('Incorrect token.');
+      response.setStatusCode(401);
+      response.setBody({
+        success: false,
+        error: 'Incorrect token.',
+      });
+      return callback(null, response);
     }
-    console.error('Incorrect token.');
-    response.setStatusCode(401);
-    response.setBody({
-      success: false,
-      error: 'Incorrect token.',
-    });
-    return callback(null, response);
   } catch (error) {
     console.error(error);
     response.setStatusCode(error.status);

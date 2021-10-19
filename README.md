@@ -43,6 +43,8 @@ twilio signal:checkout b380e61
 twilio signal:checkout 051c794
 ```
 
+[💻  View Code Changes `prototype...ui-setup`](https://github.com/twilio/signal2021-devs/compare/prototype...ui-setup)
+
 **Covered Products**
 
 - [Twilio CLI]
@@ -118,6 +120,8 @@ _Twilio Paste UI Code_
 twilio signal:checkout 7b42975
 ```
 
+[💻  View Code Changes `devops-start...devops`](https://github.com/twilio/signal2021-devs/compare/devops-start...devops)
+
 **Covered Products**
 
 - [Twilio Provider][terraform provider] for [Terraform]
@@ -158,6 +162,8 @@ _GitHub Actions CI/CD Example_
 ```bash
 twilio signal:checkout 797e820
 ```
+
+[💻  View Code Changes `monitoring-start...monitoring`](https://github.com/twilio/signal2021-devs/compare/monitoring-start...monitoring)
 
 **Covered Products**
 

@@ -44,7 +44,7 @@ jobs:
       - name: Terraform Validate
         run: terraform validate -no-color
       - name: Configure Twilio with Terraform
-        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+        if: github.ref == 'refs/heads/release' && github.event_name == 'push'
         run: terraform apply -auto-approve
         env:
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}

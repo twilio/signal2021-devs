@@ -59,13 +59,14 @@ resource "twilio_verify_services_v2" "service" {
 }
 
 resource "twilio_notify_services_v1" "service" {
-  friendly_name = "Talon 1 Notify Service"
-  messaging_service_sid= twilio_messaging_services_v1.sid
+  friendly_name     	= "Talon 1 Notify Service"
+  messaging_service_sid = twilio_messaging_services_v1.service.sid
 }
 
 output "notifyServiceSid" {
   value = twilio_notify_services_v1.service.sid
 }
+
 
 output "serverlessService" {
   value     = twilio_serverless_services_v1.service.sid

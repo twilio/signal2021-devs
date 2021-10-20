@@ -14,6 +14,10 @@ This page serves as a collection of all of the resources and demo code covered d
 twilio signal:checkout 6f7d66b
 ```
 
+### Slides
+
+📊 [You can find the slides over on Speaker Deck](https://speakerdeck.com/dkundel/signal-2021-live-developer-mode)
+
 ### Prototyping
 
 ```bash

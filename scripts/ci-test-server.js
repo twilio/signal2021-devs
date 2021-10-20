@@ -3,6 +3,12 @@ const { createFunctionsServer } = require('./utils/functions-server');
 const { createPrismServer } = require('./utils/prism-server');
 
 async function run() {
+  //https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_notify_v1.yaml
+  console.log('>>> Starting Twilio Notify Mock Server...');
+  const notifyServer = await createPrismServer(
+      'https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/yaml/twilio_notify_v1.yaml',
+      4001
+  );
   console.log('>>> Starting Twilio Verify Mock Server...');
   const verifyServer = await createPrismServer(
     'https://raw.githubusercontent.com/twilio/twilio-oai/main/spec/json/twilio_verify_v2.json',
@@ -17,6 +23,7 @@ async function run() {
 
   console.log('>>> Shutting things down...');
   functionsServer.close();
+  notifyServer.close();
   verifyServer.close();
 }
 

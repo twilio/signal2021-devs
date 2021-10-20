@@ -11,7 +11,7 @@
     "build": "parcel build src/index.html -d dist",
     "postbuild": "ncp assets dist",
     "predeploy": "npm run build",
-    "deploy": "twilio-run deploy",
+    "deploy": "./scripts/deploy.bash",
     "preci:test": "npm run build",
     "ci:test": "node ./scripts/ci-test-server.js"
   },

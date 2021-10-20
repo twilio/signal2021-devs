@@ -32,7 +32,7 @@ resource "twilio_serverless_services_environments_v1" "environment" {
 }
 
 locals {
-  base_domain        = twilio_serverless_services_environments_v1.environment.domain_name
+  base_domain        = "${twilio_serverless_services_v1.service.unique_name}-1424-${twilio_serverless_services_environments_v1.environment.domain_suffix}.twil.io"
   base_functions_url = "https://${local.base_domain}"
   sms_webhook_url    = "${local.base_functions_url}/incoming-sms"
 }
@@ -56,6 +56,15 @@ resource "twilio_messaging_services_phone_numbers_v1" "number" {
 
 resource "twilio_verify_services_v2" "service" {
   friendly_name = "Talon 1"
+}
+
+resource "twilio_notify_service_v1" "service" {
+  friendly_name = "Talon 1 Notify Service"
+  messaging_service_sid= twilio_messaging_services_v1.sid
+}
+
+output "notifyServiceSid" {
+  value = twilio_notify_service_v1.service.sid
 }
 
 output "serverlessService" {
